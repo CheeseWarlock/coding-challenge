@@ -1,5 +1,6 @@
 body,
 html {
+  background: #eee;
   margin: 0;
   padding: 0;
   color: #333;
@@ -7,7 +8,8 @@ html {
 
 #container {
   font-family: 'Segoe Ui';
-  background: #eee;
+  max-width: 800px;
+  margin: 0 auto;
   padding: 40px; }
   #container h1 {
     text-align: center; }
