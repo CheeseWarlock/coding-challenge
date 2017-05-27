@@ -31,10 +31,6 @@ html {
       align-items: center; }
       #container .repo .counters > div {
         margin-right: 20px; }
-        #container .repo .counters > div i {
-          color: #333;
-          margin-right: 5px;
-          font-size: 1.25em; }
         #container .repo .counters > div a:link,
         #container .repo .counters > div a:visited {
           color: #777;

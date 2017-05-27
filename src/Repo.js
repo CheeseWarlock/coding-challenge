@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import styled from 'styled-components';
+
+const Icon = styled.i`
+  color: #333;
+  margin-right: 5px;
+  font-size: 1.25em;
+`;
 
 class Repo extends Component {
   render() {
@@ -17,13 +24,13 @@ class Repo extends Component {
         </p>
         <div className="counters">
           <div className="stars">
-            <i className="fa fa-star" />
+            <Icon className="fa fa-star" />
             <a href={ repo.stargazers_url }>
               { repo.stargazers_count }
             </a>
           </div>
           <div className="forks">
-            <i className="fa fa-code-fork" />
+            <Icon className="fa fa-code-fork" />
             <a href={ repo.forks_url }>
               { repo.forks_count }
             </a>
