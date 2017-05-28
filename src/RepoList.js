@@ -3,7 +3,18 @@ import styled from 'styled-components';
 import Repo from './Repo.js';
 
 const RepoListTitle = styled.h1`
+    text-align: center;
+`;
+
+const RepoListNameField = styled.input`
+  border: 0;
+  background: none;
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  border-bottom: 2px solid #333;
   text-align: center;
+  color: inherit;
 `;
 
 const RepoListContainer = styled.div`
@@ -17,19 +28,31 @@ class RepoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: this.props.user,
       repos: []
     };
     this.loadData();
   }
 
+  handleChange(event) {
+    this.setState({
+      user: event.target.value
+    });
+    this.loadData(event.target.value);
+  }
+
+  handleChangeWithDebounce() {
+
+  }
+
   loadData() {
-    const url = `https://api.github.com/users/${ this.props.user }/starred`;
+    const url = `https://api.github.com/users/${ this.state.user }/starred`;
 
     fetch(url)
       .then(res => res.json())
       .then(data => {
         this.setState({
-          repos: data
+          repos: data.length ? data : []
         });
       });
   }
@@ -43,7 +66,9 @@ class RepoList extends Component {
     return (
       <RepoListContainer>
         <RepoListTitle>
-          { "Starred repos for " + this.props.user }
+          Starred repos for
+          <RepoListNameField value={ this.state.user }
+                             onChange={ (event) => this.handleChange(event) } />
         </RepoListTitle>
         { repoElements }
       </RepoListContainer>
