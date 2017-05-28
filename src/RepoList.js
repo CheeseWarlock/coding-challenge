@@ -16,6 +16,11 @@ const RepoListNameField = styled.input`
   border-bottom: 2px solid #333;
   text-align: center;
   color: inherit;
+
+  :focus {
+    background-color: #fff;
+    outline: 0;
+  }
 `;
 
 const RepoListContainer = styled.div`
@@ -25,6 +30,10 @@ const RepoListContainer = styled.div`
   padding: 40px;
 `;
 
+const EmptyListNotice = styled.p`
+  text-align: center;
+`;
+
 class RepoList extends Component {
   constructor(props) {
     super(props);
@@ -32,6 +41,7 @@ class RepoList extends Component {
     this.delayedChangeCallback = debounce(this.loadData, 400);
 
     this.state = {
+      loading: true,
       user: this.props.user,
       repos: []
     };
@@ -41,6 +51,7 @@ class RepoList extends Component {
   handleChange(event) {
     event.persist();
     this.setState({
+      loading: true,
       user: event.target.value
     });
     this.delayedChangeCallback(event.target.value);
@@ -53,25 +64,43 @@ class RepoList extends Component {
       .then(res => res.json())
       .then(data => {
         this.setState({
+          loading: false,
           repos: data.length ? data : []
         });
       });
   }
 
-  render() {
-    const repoElements = this.state.repos.map((repo) => {
+  buildRepoList() {
+    if (this.state.loading) {
       return (
-        <Repo data={ repo }/>
+        <EmptyListNotice>
+          Loading...
+        </EmptyListNotice>
       );
-    });
+    } else if (this.state.repos.length) {
+      return this.state.repos.map((repo) => {
+        return (
+          <Repo data={ repo }/>
+        );
+      });
+    } else {
+      return (
+        <EmptyListNotice>
+          No starred repos found for { this.state.user }.
+        </EmptyListNotice>
+      );
+    }
+  }
+
+  render() {
     return (
       <RepoListContainer>
         <RepoListTitle>
-          Starred repos for
+          Starred repos for&nbsp;
           <RepoListNameField value={ this.state.user }
                              onChange={ (event) => this.handleChange(event) } />
         </RepoListTitle>
-        { repoElements }
+        { this.buildRepoList() }
       </RepoListContainer>
     );
   }
