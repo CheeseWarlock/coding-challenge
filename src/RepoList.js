@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import debounce from 'debounce';
 import Repo from './Repo.js';
 
 const RepoListTitle = styled.h1`
@@ -27,26 +28,26 @@ const RepoListContainer = styled.div`
 class RepoList extends Component {
   constructor(props) {
     super(props);
+
+    this.delayedChangeCallback = debounce(this.loadData, 400);
+
     this.state = {
       user: this.props.user,
       repos: []
     };
-    this.loadData();
+    this.loadData(this.props.user);
   }
 
   handleChange(event) {
+    event.persist();
     this.setState({
       user: event.target.value
     });
-    this.loadData(event.target.value);
+    this.delayedChangeCallback(event.target.value);
   }
 
-  handleChangeWithDebounce() {
-
-  }
-
-  loadData() {
-    const url = `https://api.github.com/users/${ this.state.user }/starred`;
+  loadData(user) {
+    const url = `https://api.github.com/users/${ user }/starred`;
 
     fetch(url)
       .then(res => res.json())
