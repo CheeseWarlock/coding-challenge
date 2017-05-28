@@ -5,36 +5,3 @@ html {
   padding: 0;
   color: #333;
   font-family: sans-serif; }
-
-#container {
-  font-family: 'Segoe Ui';
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 40px; }
-  #container h1 {
-    text-align: center; }
-  #container .repo {
-    background: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
-    #container .repo h2 {
-      font-weight: normal; }
-      #container .repo h2 a {
-        color: #007afb; }
-      #container .repo h2 i {
-        color: #ffc500;
-        margin-right: 7px; }
-    #container .repo .counters {
-      display: flex;
-      flex-flow: row nowrap;
-      align-items: center; }
-      #container .repo .counters > div {
-        margin-right: 20px; }
-        #container .repo .counters > div a:link,
-        #container .repo .counters > div a:visited {
-          color: #777;
-          text-decoration: none; }
-        #container .repo .counters > div a:hover,
-        #container .repo .counters > div a:active {
-          color: #ff5600; }

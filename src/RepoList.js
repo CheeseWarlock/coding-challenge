@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import styled from 'styled-components';
 import Repo from './Repo.js';
+
+const RepoListTitle = styled.h1`
+  text-align: center;
+`;
+
+const RepoListContainer = styled.div`
+  font-family: 'Segoe Ui';
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+`;
 
 class RepoList extends Component {
   constructor(props) {
@@ -26,16 +37,16 @@ class RepoList extends Component {
   render() {
     const repoElements = this.state.repos.map((repo) => {
       return (
-        <Repo repo={ repo }/>
+        <Repo data={ repo }/>
       );
     });
     return (
-      <div className="RepoList" id="container">
-        <h1>
+      <RepoListContainer>
+        <RepoListTitle>
           { "Starred repos for " + this.props.user }
-        </h1>
+        </RepoListTitle>
         { repoElements }
-      </div>
+      </RepoListContainer>
     );
   }
 }
