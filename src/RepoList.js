@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import debounce from 'debounce';
 import Repo from './Repo.js';
 
@@ -30,8 +30,23 @@ const RepoListContainer = styled.div`
   padding: 40px;
 `;
 
-const EmptyListNotice = styled.p`
+const RepoListNotice = styled.p`
   text-align: center;
+`;
+
+const Rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const LoadingSpinner = styled.i`
+  animation: ${ Rotate } infinite 3s linear;
+  font-size: 2em;
 `;
 
 class RepoList extends Component {
@@ -73,9 +88,9 @@ class RepoList extends Component {
   buildRepoList() {
     if (this.state.loading) {
       return (
-        <EmptyListNotice>
-          Loading...
-        </EmptyListNotice>
+        <RepoListNotice>
+          <LoadingSpinner className="fa fa-spinner"/>
+        </RepoListNotice>
       );
     } else if (this.state.repos.length) {
       return this.state.repos.map((repo) => {
@@ -85,9 +100,9 @@ class RepoList extends Component {
       });
     } else {
       return (
-        <EmptyListNotice>
+        <RepoListNotice>
           No starred repos found for { this.state.user }.
-        </EmptyListNotice>
+        </RepoListNotice>
       );
     }
   }
