@@ -64,12 +64,20 @@ class RepoList extends Component {
   }
 
   handleChange(event) {
-    event.persist();
-    this.setState({
-      loading: true,
-      user: event.target.value
-    });
-    this.delayedChangeCallback(event.target.value);
+    if (event.target.value.length) {
+      event.persist();
+      this.setState({
+        loading: true,
+        user: event.target.value
+      });
+      this.delayedChangeCallback(event.target.value);
+    } else {
+      this.setState({
+        loading: false,
+        user: "",
+        repos: []
+      });
+    }
   }
 
   loadData(user) {
@@ -98,10 +106,16 @@ class RepoList extends Component {
           <Repo data={ repo }/>
         );
       });
-    } else {
+    } else if (this.state.user.length) {
       return (
         <RepoListNotice>
           No starred repos found for { this.state.user }.
+        </RepoListNotice>
+      );
+    } else {
+      return (
+        <RepoListNotice>
+          Enter a GitHub username to see their starred repos!
         </RepoListNotice>
       );
     }
